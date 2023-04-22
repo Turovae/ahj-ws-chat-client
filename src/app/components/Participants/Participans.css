@@ -6,7 +6,8 @@
   border-radius: 10px 0 0 10px;
   left: -200px;
   top: 15px;
-  max-height: 90%;
+  bottom: 15px;
+  overflow-y: auto;
 }
 
 .participants-list {

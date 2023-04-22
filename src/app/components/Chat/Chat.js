@@ -15,6 +15,8 @@ export default class Chat extends WebComponent {
     this.messagesComponent = null;
     this.inputComponent = null;
 
+    this.server = null;
+
     this.submitMessage = this.submitMessage.bind(this);
 
     this.messages = [
@@ -54,8 +56,10 @@ export default class Chat extends WebComponent {
     });
     this.inputComponent.appendToComponent(this);
     this.inputComponent.registerListener('keydown', this.submitMessage);
+  }
 
-    this.messages.forEach((message) => {
+  addMessages(messages) {
+    messages.forEach((message) => {
       this.addMessage(message);
     });
   }
@@ -90,5 +94,10 @@ export default class Chat extends WebComponent {
       });
       this.inputComponent.value = '';
     }
+    console.log(this.owner);
+  }
+
+  updateParticipants(participant) {
+    this.participantsComponent.updateParticipants(participant);
   }
 }

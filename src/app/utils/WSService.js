@@ -1,7 +1,7 @@
 export default class WSService {
   constructor(entryForm, chat) {
     this.port = 7070;
-    this.host = 'localhost';
+    this.host = 'chat-server-dtzb.onrender.com';
     this.author = null;
 
     this.entryForm = entryForm;

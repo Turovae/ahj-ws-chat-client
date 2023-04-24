@@ -1,6 +1,6 @@
 image: Ubuntu1804
 
-stack: mode 16
+stack: node 16
 branches:
   only:
     - main

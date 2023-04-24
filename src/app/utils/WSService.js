@@ -12,7 +12,7 @@ export default class WSService {
     this.getData = this.getData.bind(this);
     this.disconnect = this.disconnect.bind(this);
 
-    this.ws = new WebSocket(`wss://${this.host}:${this.port}`);
+    this.ws = new WebSocket(`wss://${this.host}`);
 
     this.ws.addEventListener('message', this.getData);
 

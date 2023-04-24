@@ -1,3 +1,7 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/m4nhp7fwfavx904l?svg=true)](https://ci.appveyor.com/project/Turovae/ahj-ws-chat-client)
+
+---
+
 # Домашнее задание к занятию "8. EventSource, Websockets"
 
 Правила сдачи задания:

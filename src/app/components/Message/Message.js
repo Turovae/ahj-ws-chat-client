@@ -9,9 +9,9 @@ export default class Message extends WebComponent {
     });
   }
 
-  addContent(props) {
-    this.createHeader(props.author, props.created);
-    this.createBody(props.message);
+  addContent(msg) {
+    this.createHeader(msg.author, msg.created);
+    this.createBody(msg.body);
   }
 
   createHeader(author, created) {

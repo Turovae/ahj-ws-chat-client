@@ -1,5 +1,5 @@
 .chat {
-  background-color: #bbb;
+  background-color: #dadada;
   width: 600px;
   height: 100%;
   margin: 0 auto;
@@ -13,7 +13,6 @@
 }
 
 .chat-messages {
-  background-color: #ffc;
   list-style: none;
   overflow-y: auto;
 }

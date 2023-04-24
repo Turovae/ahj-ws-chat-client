@@ -13,10 +13,6 @@ export default class EntryForm extends WebComponent {
     this.author = null;
 
     this.sendData = this.sendData.bind(this);
-    // this.getData = this.getData.bind(this);
-
-    // this.server.addListener('message', this.getData);
-    // this.form.registerListener('submit', this.server.sendData);
 
     this.create();
 
@@ -69,11 +65,7 @@ export default class EntryForm extends WebComponent {
     this.chat.server = this.server;
     this.chat.addContent();
 
-    console.log(this.chat);
-
     this.chat.addMessages(response.messages);
-    // this.chat.updateParticipants(response.authors);
-
     this.remove();
   }
 

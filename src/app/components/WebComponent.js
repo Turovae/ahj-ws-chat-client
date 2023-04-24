@@ -101,4 +101,8 @@ export default class WebComponent {
   removeAllContent() {
     this.element.innerHTML = '';
   }
+
+  scrollToEnd() {
+    this.element.scrollTop = this.element.scrollHeight - this.element.clientHeight;
+  }
 }

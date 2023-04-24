@@ -18,8 +18,6 @@ export default class Chat extends WebComponent {
     this.server = null;
 
     this.submitMessage = this.submitMessage.bind(this);
-
-    // this.addContent();
   }
 
   addContent() {
@@ -46,15 +44,18 @@ export default class Chat extends WebComponent {
     });
   }
 
-  addMessage(message) {
-    const messageComponent = new Message();
-    if (this.isOwner(message)) {
-      messageComponent.addClass('you-message');
+  addMessage(msg) {
+    const msgComponent = new Message();
+    if (this.isOwner(msg)) {
+      msgComponent.addClass('you-message');
       // eslint-disable-next-line no-param-reassign
-      message.author = 'You';
+      msg.author = 'You';
     }
-    messageComponent.addContent(message);
-    messageComponent.appendToComponent(this.messagesComponent);
+    msgComponent.addContent(msg);
+    msgComponent.appendToComponent(this.messagesComponent);
+    this.inputComponent.value = '';
+
+    this.messagesComponent.scrollToEnd();
   }
 
   isOwner(message) {
@@ -69,17 +70,19 @@ export default class Chat extends WebComponent {
     if (this.inputComponent.value) {
       const message = this.inputComponent.value;
 
-      this.addMessage({
+      const msg = {
+        type: 'message',
         author: this.author,
-        created: new Date(),
-        message,
-      });
-      this.inputComponent.value = '';
+        body: message,
+      };
+
+      this.server.sendData(msg);
     }
-    console.log(this.owner);
   }
 
   updateParticipants(participants) {
-    this.participantsComponent.updateParticipants(participants);
+    if (this.participantsComponent) {
+      this.participantsComponent.updateParticipants(participants);
+    }
   }
 }

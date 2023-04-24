@@ -25,7 +25,6 @@ export default class WSService {
 
   getData(msg) {
     const response = JSON.parse(msg.data);
-    console.log(response);
     if (response.ok) {
       if (response.type === 'connection') {
         if (response.author === this.author) {
@@ -34,18 +33,25 @@ export default class WSService {
           this.connect = true;
         }
 
-        if (this.connect) {
+        if (this.chat && this.chat.updateParticipants) {
           this.chat.updateParticipants(response.authors);
         }
       }
 
+      if (!this.connect) {
+        return;
+      }
+
       if (response.type === 'disconnect') {
-        if (this.chat) {
+        if (this.chat && this.chat.updateParticipants) {
           this.chat.updateParticipants(response.authors);
         }
       }
+
+      if (response.type === 'message') {
+        this.chat.addMessage(response);
+      }
     } else {
-      console.log(this.entryForm);
       this.entryForm.showMessage(response.statusMessage);
     }
   }
@@ -56,7 +62,6 @@ export default class WSService {
   }
 
   disconnect() {
-    console.log('dis');
     if (this.author) {
       const msg = {
         type: 'disconnect',
@@ -64,7 +69,6 @@ export default class WSService {
       };
 
       this.sendData(msg);
-      console.log(msg);
     }
   }
 }

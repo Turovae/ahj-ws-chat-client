@@ -7,8 +7,6 @@ export default class Participants extends WebComponent {
       class: 'chat-participants',
     });
     this.author = author;
-
-    // this.participants = ['Alexandra', 'Ivan', 'Vasily', 'You'];
     this.participantsContainer = null;
 
     this.updateParticipants = this.updateParticipants.bind(this);
@@ -22,12 +20,9 @@ export default class Participants extends WebComponent {
     });
 
     this.participantsContainer.appendToComponent(this);
-
-    // this.updateParticipants(this.participants);
   }
 
   updateParticipants(participants) {
-    console.log(this.author);
     this.participantsContainer.removeAllContent();
 
     participants.forEach((participant) => {

@@ -1,33 +1,34 @@
 import './EntryForm.css';
 import WebComponent from '../WebComponent';
 import Chat from '../Chat/Chat';
+import WSService from '../../utils/WSService';
 
 export default class EntryForm extends WebComponent {
-  constructor(server) {
+  constructor() {
     super();
     this.form = null;
     this.wrapper = null;
     this.input = null;
     this.btn = null;
-
-    this.server = server;
+    this.author = null;
 
     this.sendData = this.sendData.bind(this);
-    this.getData = this.getData.bind(this);
+    // this.getData = this.getData.bind(this);
 
-    this.server.addListener('message', this.getData);
+    // this.server.addListener('message', this.getData);
+    // this.form.registerListener('submit', this.server.sendData);
 
     this.create();
+
+    this.chat = new Chat();
+    this.server = new WSService(this, this.chat);
   }
 
   create() {
     this.wrapper = new WebComponent('div', {
       class: 'wrapper',
-      // text: 'this is wrapper',
     });
     this.element = this.wrapper;
-
-    // this.wrapper.appendToDOM('.app');
 
     this.form = new WebComponent('form', {
       class: 'entry-form',
@@ -62,44 +63,38 @@ export default class EntryForm extends WebComponent {
     this.wrapper.appendToDOM(container);
   }
 
+  openChat(response) {
+    this.chat.author = response.author;
+    this.chat.appendToDOM('.app');
+    this.chat.server = this.server;
+    this.chat.addContent();
+
+    console.log(this.chat);
+
+    this.chat.addMessages(response.messages);
+    // this.chat.updateParticipants(response.authors);
+
+    this.remove();
+  }
+
   sendData(event) {
     event.preventDefault();
-    const { value } = this.input;
 
-    if (value.length < 3) {
+    if (this.input.value.length < 3) {
       this.showMessage('Name is too short');
       return;
     }
 
+    this.author = this.input.value;
+
     this.input.value = '';
 
-    this.server.send(JSON.stringify({
+    const msg = {
       type: 'connection',
-      author: value,
-    }));
-  }
+      author: this.author,
+    };
 
-  getData(msg) {
-    const response = JSON.parse(msg.data);
-    if (response.ok) {
-      this.openChat(response);
-    } else {
-      this.showMessage(response.statusMessage);
-    }
-  }
-
-  openChat(response) {
-    const chat = new Chat();
-
-    chat.owner = response.author;
-    chat.appendToDOM('.app');
-    chat.server = this.server;
-
-    chat.addMessages(response.messages);
-    chat.updateParticipants(response.authors);
-
-    this.server.removeListener('message', this.getData);
-    this.remove();
+    this.server.sendData(msg);
   }
 
   showMessage(msg) {

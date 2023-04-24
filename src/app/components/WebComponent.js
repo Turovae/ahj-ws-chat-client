@@ -99,6 +99,6 @@ export default class WebComponent {
   }
 
   removeAllContent() {
-    this.element.innerHtml = '';
+    this.element.innerHTML = '';
   }
 }

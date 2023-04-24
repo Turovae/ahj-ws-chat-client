@@ -4,12 +4,12 @@ import Participants from '../Participants/Participants';
 import Message from '../Message/Message';
 
 export default class Chat extends WebComponent {
-  constructor() {
+  constructor(author) {
     super('div', {
       class: 'chat',
     });
 
-    this.owner = 'Seroja';
+    this.author = author;
 
     this.participantsComponent = null;
     this.messagesComponent = null;
@@ -19,29 +19,11 @@ export default class Chat extends WebComponent {
 
     this.submitMessage = this.submitMessage.bind(this);
 
-    this.messages = [
-      {
-        author: 'Alexandra',
-        created: new Date(new Date() - 100000000),
-        message: 'Remember Hurry number room!',
-      },
-      {
-        author: 'Ivan',
-        created: new Date(),
-        message: 'I am sending message',
-      },
-      {
-        author: 'Seroja',
-        created: new Date(),
-        message: 'My message',
-      },
-    ];
-
-    this.addContent();
+    // this.addContent();
   }
 
   addContent() {
-    this.participantsComponent = new Participants();
+    this.participantsComponent = new Participants(this.author);
     this.participantsComponent.appendToComponent(this);
 
     this.messagesComponent = new WebComponent('ul', {
@@ -76,7 +58,7 @@ export default class Chat extends WebComponent {
   }
 
   isOwner(message) {
-    return message.author === this.owner;
+    return message.author === this.author;
   }
 
   submitMessage(event) {
@@ -88,7 +70,7 @@ export default class Chat extends WebComponent {
       const message = this.inputComponent.value;
 
       this.addMessage({
-        author: this.owner,
+        author: this.author,
         created: new Date(),
         message,
       });
@@ -97,7 +79,7 @@ export default class Chat extends WebComponent {
     console.log(this.owner);
   }
 
-  updateParticipants(participant) {
-    this.participantsComponent.updateParticipants(participant);
+  updateParticipants(participants) {
+    this.participantsComponent.updateParticipants(participants);
   }
 }

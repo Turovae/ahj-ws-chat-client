@@ -2,13 +2,16 @@ import './Participans.css';
 import WebComponent from '../WebComponent';
 
 export default class Participants extends WebComponent {
-  constructor() {
+  constructor(author) {
     super('div', {
       class: 'chat-participants',
     });
+    this.author = author;
 
-    this.participants = ['Alexandra', 'Ivan', 'Vasily', 'You'];
+    // this.participants = ['Alexandra', 'Ivan', 'Vasily', 'You'];
     this.participantsContainer = null;
+
+    this.updateParticipants = this.updateParticipants.bind(this);
 
     this.addContent();
   }
@@ -20,15 +23,20 @@ export default class Participants extends WebComponent {
 
     this.participantsContainer.appendToComponent(this);
 
-    this.updateParticipants(this.participants);
+    // this.updateParticipants(this.participants);
   }
 
   updateParticipants(participants) {
+    console.log(this.author);
     this.participantsContainer.removeAllContent();
 
     participants.forEach((participant) => {
-      this.addParticipant(participant);
+      if (participant !== this.author) {
+        this.addParticipant(participant);
+      }
     });
+
+    this.addParticipant('You');
   }
 
   addParticipant(participant) {
